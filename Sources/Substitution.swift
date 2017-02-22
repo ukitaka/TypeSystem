@@ -32,7 +32,7 @@ struct Substitution {
         self.substitutions = substitutions
     }
 
-    func lookup(_ typeVar: TypeVar) -> Type {
+    func lookup(typeVar: TypeVar) -> Type {
         assert(typeVar.isTypeVar)
         if let type = substitutions[typeVar] {
             return type
@@ -41,17 +41,19 @@ struct Substitution {
         }
     }
 
-    func apply(_ type: Type) -> Type {
+    func apply(type: Type) -> Type {
         switch type {
         case .typeVar:
-            let u = lookup(type)
-            if (type == u) {
+            let lookedupType = lookup(typeVar: type)
+            if (type == lookedupType) {
                 return type
             } else {
-                return apply(u)
+                return apply(type: lookedupType)
             }
+
         case .arrow(let from, let to):
-            return .arrow(apply(from), apply(to))
+            return .arrow(apply(type: from), apply(type: to))
+
         case .typeConstructor(let k, let ts):
             return .typeConstructor(k, ts.map(apply))
         }
