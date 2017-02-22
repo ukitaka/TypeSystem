@@ -51,6 +51,15 @@ extension Type {
     }
 }
 
+extension Type {
+    private static var i: Int = 0
+
+    static var newTypeVar: TypeVar {
+        i = i + 1
+        return .typeVar("a\(i)")
+    }
+}
+
 extension Type: Equatable {
     static func ==(lhs: Type, rhs: Type) -> Bool {
         switch (lhs, rhs) {
