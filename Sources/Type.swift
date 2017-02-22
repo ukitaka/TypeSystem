@@ -52,11 +52,9 @@ extension Type {
 }
 
 extension Type {
-    private static var i: Int = 0
-
-    static var newTypeVar: TypeVar {
-        i = i + 1
+    static func generateTypeVar(_ i: Int = AutoIncrement.next()) -> TypeVar {
         return .typeVar("a\(i)")
+
     }
 }
 

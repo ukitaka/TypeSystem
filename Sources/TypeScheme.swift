@@ -14,7 +14,7 @@ struct TypeScheme {
 
     func instantiate() -> Type {
         let sub = typeVars.reduce(Substitution()) { (s, tv) in
-            s.extend(typeVar: tv, type: Type.newTypeVar)
+            s.extend(typeVar: tv, type: .generateTypeVar())
         }
         return sub.apply(type: expression)
     }
