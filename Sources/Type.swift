@@ -66,6 +66,8 @@ extension Type: Equatable {
     }
 }
 
+
+
 extension Type: CustomStringConvertible {
     var description: String {
         switch self {
@@ -78,5 +80,11 @@ extension Type: CustomStringConvertible {
                 ? ""
                 : "[" + ts.map { $0.description }.reduce("", +)) + "]"
         }
+    }
+}
+
+extension Type: Hashable {
+    var hashValue: Int {
+        return self.description.hashValue
     }
 }

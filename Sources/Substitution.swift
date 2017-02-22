@@ -20,12 +20,27 @@ import Foundation
 ///  σ(X → X) = σ(X) → σ(X) = T → T
 ///  σ(F[X]) = F[T]
 ///  σ(F[T]) = F[T]
-protocol Substitution {
-    func lookup(_ x: Type) -> Type
-    func apply(_ type: Type) -> Type
-}
+///
+struct Substitution {
+    fileprivate let substitutions: [TypeVar: Type]
 
-extension Substitution {
+    init() {
+        self.substitutions = [:]
+    }
+
+    init(substitutions: [TypeVar: Type]) {
+        self.substitutions = substitutions
+    }
+
+    func lookup(_ typeVar: TypeVar) -> Type {
+        assert(typeVar.isTypeVar)
+        if let type = substitutions[typeVar] {
+            return type
+        } else {
+            return typeVar
+        }
+    }
+
     func apply(_ type: Type) -> Type {
         switch type {
         case .typeVar:
@@ -40,5 +55,9 @@ extension Substitution {
         case .typeConstructor(let k, let ts):
             return .typeConstructor(k, ts.map(apply))
         }
+    }
+
+    func extend(typeVar: TypeVar, type: Type) -> Substitution {
+        return Substitution(substitutions: substitutions + [typeVar:type])
     }
 }
