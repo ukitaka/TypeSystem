@@ -14,8 +14,16 @@ indirect enum Type {
     case typeConstructor(String, [Type])
 }
 
+// MARK: - workaround
+
+typealias TypeVar = Type
+typealias Arrow = Type
+typealias TypeConstructor = Type
+
+// MARK: - extensions
+
 extension Type {
-    var isTyvar: Bool {
+    var isTypeVar: Bool {
         switch self {
         case .typeVar:
             return true
@@ -33,7 +41,7 @@ extension Type {
         }
     }
 
-    var isTycon: Bool {
+    var isTypeConstructor: Bool {
         switch self {
         case .typeConstructor:
             return true
