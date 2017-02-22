@@ -15,8 +15,11 @@ import Foundation
 /// then,
 ///  σ(X) = T
 ///  σ(Y) = S
-///  σ(X → X) = σ(X) → σ(X) = T → T
+///  σ(Z) = Z
 ///  σ(T) = T
+///  σ(X → X) = σ(X) → σ(X) = T → T
+///  σ(F[X]) = F[T]
+///  σ(F[T]) = F[T]
 protocol Substitution {
     func lookup(_ x: Type) -> Type
     func apply(_ type: Type) -> Type
@@ -34,6 +37,8 @@ extension Substitution {
             }
         case .arrow(let from, let to):
             return .arrow(apply(from), apply(to))
+        case .typeConstructor(let k, let ts):
+            return .typeConstructor(k, ts.map(apply))
         }
     }
 }
