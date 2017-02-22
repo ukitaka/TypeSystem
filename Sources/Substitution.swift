@@ -8,6 +8,15 @@
 
 import Foundation
 
+// MARK: - Substitution (σ)
+
+/// Substitution (σ) is a finite mapping from type variable to type.
+/// if σ = [ X ↦ T, Y ↦ S ]
+/// then,
+///  σ(X) = T
+///  σ(Y) = S
+///  σ(X → X) = σ(X) → σ(X) = T → T
+///  σ(T) = T
 protocol Substitution {
     func lookup(_ x: Type) -> Type
     func apply(_ type: Type) -> Type
