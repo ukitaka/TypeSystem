@@ -60,6 +60,6 @@ struct Substitution {
     }
 
     func extend(typeVar: TypeVar, type: Type) -> Substitution {
-        return Substitution(substitutions: substitutions + [typeVar:type])
+        return Substitution(substitutions: substitutions.union([typeVar:type]))
     }
 }

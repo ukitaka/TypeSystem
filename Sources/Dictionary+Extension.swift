@@ -8,10 +8,12 @@
 
 import Foundation
 
-func + <K, V>(lhs: [K: V], rhs: [K: V]) -> [K: V] {
-    var newDictionary = lhs
-    for (key, value) in rhs {
-        newDictionary[key] = value
+extension Dictionary {
+    func union(_ other: [Key: Value]) -> [Key: Value] {
+        var newDictionary = self
+        for (key, value) in other {
+            newDictionary[key] = value
+        }
+        return newDictionary
     }
-    return newDictionary
 }
