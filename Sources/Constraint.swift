@@ -26,7 +26,6 @@ extension Equation: Equatable {
     }
 }
 
-
 // MARK: - Constraint Set
 
 struct ConstraintSet {
