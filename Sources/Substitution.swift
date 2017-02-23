@@ -10,17 +10,6 @@ import Foundation
 
 // MARK: - Substitution (σ)
 
-/// Substitution (σ) is a finite mapping from type variable to type.
-/// if σ = [ X ↦ T, Y ↦ S ]
-/// then,
-///  σ(X) = T
-///  σ(Y) = S
-///  σ(Z) = Z
-///  σ(T) = T
-///  σ(X → X) = σ(X) → σ(X) = T → T
-///  σ(F[X]) = F[T]
-///  σ(F[T]) = F[T]
-///
 struct Substitution {
     fileprivate let substitutions: [TypeVar: Type]
 
