@@ -90,7 +90,15 @@ extension Substitution: ExpressibleByDictionaryLiteral {
     typealias Key = TypeVar
     typealias Value = Type
 
-    public init(dictionaryLiteral elements: (Key, Value)...) {
+    init(_ elements: (Key, Value)...) {
+        var substitutions: [Key: Value] = [:]
+        for (key, value) in elements {
+            substitutions[key] = value
+        }
+        self.substitutions = substitutions
+    }
+
+    init(dictionaryLiteral elements: (Key, Value)...) {
         var substitutions: [Key: Value] = [:]
         for (key, value) in elements {
             substitutions[key] = value

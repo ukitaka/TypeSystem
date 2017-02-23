@@ -15,16 +15,18 @@ class TypeInferenceTests: XCTestCase {
         let Z = Type.typeVar("Z")
         let T = Type.type("T")
         let S = Type.type("S")
-        
-        let σ = Substitution(substitutions: [
-            X: T,
-            Y: S
-        ]).apply
+
+        let σ = Substitution(
+            X ↦ T,
+            Y ↦ S
+        ).apply
 
         XCTAssertEqual(σ(X), T)
         XCTAssertEqual(σ(Y), S)
         XCTAssertEqual(σ(Z), Z)
         XCTAssertEqual(σ(T), T)
         XCTAssertEqual(σ(S), S)
+        XCTAssertEqual(σ(X → X), σ(X) → σ(X))
+        XCTAssertEqual(σ(X → X), T → T)
     }
 }
