@@ -62,4 +62,14 @@ struct Substitution {
     func extend(typeVar: TypeVar, type: Type) -> Substitution {
         return Substitution(substitutions: substitutions.union([typeVar:type]))
     }
+
+    func unifies(equation: Equation) -> Bool {
+        return apply(type: equation.left) == apply(type: equation.right)
+    }
+
+    func unifies(constraintSet: ConstraintSet) -> Bool {
+        return constraintSet.equations
+            .map(unifies)
+            .reduce(true) { $0.0 && $0.1 }
+    }
 }

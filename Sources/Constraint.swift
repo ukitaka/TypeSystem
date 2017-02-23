@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct Constraint {
+// MARK: - Equation
+
+struct Equation {
     let left: Type
     let right: Type
 
@@ -18,14 +20,23 @@ struct Constraint {
     }
 }
 
-struct Constraints {
-    let constraints: [Constraint]
+extension Equation: Equatable {
+    static func == (lhs: Equation, rhs: Equation) -> Bool {
+        return lhs.left == rhs.left && lhs.right == rhs.right
+    }
+}
 
-    init(constrant: Constraint) {
-        self.constraints = [constrant]
+
+// MARK: - Constraint Set
+
+struct ConstraintSet {
+    let equations: [Equation]
+
+    init(equation: Equation) {
+        self.equations = [equation]
     }
 
-    init(constrants: [Constraint]) {
-        self.constraints = constrants
+    init(equations: [Equation]) {
+        self.equations = equations
     }
 }
