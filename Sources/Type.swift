@@ -14,6 +14,18 @@ indirect enum Type {
     case type(String)
 }
 
+// MARK: - Concrete types
+
+extension Type {
+    static var bool: ConcreteType {
+        return .type("Bool")
+    }
+
+    static var nat: ConcreteType {
+        return .type("Nat")
+    }
+}
+
 // MARK: - workaround
 
 typealias TypeVar = Type
@@ -51,20 +63,7 @@ extension Type {
     }
 }
 
-extension Type {
-    static func generateTypeVar(_ i: Int = AutoIncrement.next()) -> TypeVar {
-        return .typeVar("a\(i)")
-
-    }
-
-    static var bool: ConcreteType {
-        return .type("Bool")
-    }
-
-    static var nat: ConcreteType {
-        return .type("Nat")
-    }
-}
+// MARK: - Equatable
 
 extension Type: Equatable {
     static func ==(lhs: Type, rhs: Type) -> Bool {
@@ -81,6 +80,8 @@ extension Type: Equatable {
     }
 }
 
+// MARK: - CustomStringConvertible
+
 extension Type: CustomStringConvertible {
     var description: String {
         switch self {
@@ -93,6 +94,8 @@ extension Type: CustomStringConvertible {
         }
     }
 }
+
+// MARK: - Hashable
 
 extension Type: Hashable {
     var hashValue: Int {
