@@ -31,6 +31,10 @@ struct Substitution {
         return Array(substitutions.values)
     }
 
+    func contains(_ s: (TypeVar, Type)) -> Bool {
+        return substitutions[s.0] == s.1
+    }
+
     // MARK: - apply
 
     func lookup(typeVar: TypeVar) -> Type {
@@ -94,4 +98,23 @@ extension Substitution: ExpressibleByDictionaryLiteral {
         }
         self.substitutions = substitutions
     }
+}
+
+// MARK: - 
+
+func • (σ: Substitution, γ: Substitution) -> Substitution {
+    var substitutions: [TypeVar: Type] = [:]
+
+    for (x, t) in γ.substitutions {
+        substitutions[x] = σ.apply(type: t)
+    }
+
+    for (x, t) in σ.substitutions {
+        if substitutions.keys.contains(x) {
+            continue
+        } else {
+            substitutions[x] = t
+        }
+    }
+    return Substitution(substitutions: substitutions)
 }

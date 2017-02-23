@@ -23,3 +23,26 @@ infix operator →
 func → (lhs: Type, rhs: Type) -> Arrow {
     return .arrow(lhs, rhs)
 }
+
+// MARK: - Composition
+
+precedencegroup CompositionPrecedence {
+    associativity: right
+    higherThan: BitwiseShiftPrecedence
+}
+
+infix operator • : CompositionPrecedence
+
+// MARK: - Sets
+
+infix operator ∈
+
+func ∈ (lhs: (TypeVar, ConcreteType), rhs: Substitution) -> Bool {
+    return rhs.contains(lhs)
+}
+
+infix operator ∋
+
+func ∋ (lhs: Substitution, rhs: (TypeVar, ConcreteType)) -> Bool {
+    return lhs.contains(rhs)
+}
