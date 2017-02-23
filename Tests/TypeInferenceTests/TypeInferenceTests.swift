@@ -4,6 +4,7 @@ import XCTest
 class TypeInferenceTests: XCTestCase {
     static var allTests : [(String, (TypeInferenceTests) -> () throws -> Void)] {
         return [
+            ("testSubstitution", TypeInferenceTests.testSubstitution)
         ]
     }
 
