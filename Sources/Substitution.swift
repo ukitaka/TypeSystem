@@ -83,3 +83,18 @@ struct Substitution {
             .reduce(true) { $0.0 && $0.1 }
     }
 }
+
+// MARK: - 
+
+extension Substitution: ExpressibleByDictionaryLiteral {
+    typealias Key = TypeVar
+    typealias Value = Type
+
+    public init(dictionaryLiteral elements: (Key, Value)...) {
+        var substitutions: [Key: Value] = [:]
+        for (key, value) in elements {
+            substitutions[key] = value
+        }
+        self.substitutions = substitutions
+    }
+}
