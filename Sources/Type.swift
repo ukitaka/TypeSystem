@@ -18,7 +18,7 @@ indirect enum Type {
 
 typealias TypeVar = Type
 typealias Arrow = Type
-typealias TypeConstructor = Type
+typealias ConcreteType = Type
 
 // MARK: - extensions
 
@@ -55,6 +55,14 @@ extension Type {
     static func generateTypeVar(_ i: Int = AutoIncrement.next()) -> TypeVar {
         return .typeVar("a\(i)")
 
+    }
+
+    static var bool: ConcreteType {
+        return .type("Bool")
+    }
+
+    static var nat: ConcreteType {
+        return .type("Nat")
     }
 }
 
