@@ -81,8 +81,6 @@ extension Type: Equatable {
     }
 }
 
-
-
 extension Type: CustomStringConvertible {
     var description: String {
         switch self {
