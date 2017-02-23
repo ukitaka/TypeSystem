@@ -11,7 +11,7 @@ import Foundation
 indirect enum Type {
     case typeVar(String)
     case arrow(Type, Type)
-    case typeConstructor(String, [Type])
+    case type(String)
 }
 
 // MARK: - workaround
@@ -41,9 +41,9 @@ extension Type {
         }
     }
 
-    var isTypeConstructor: Bool {
+    var isType: Bool {
         switch self {
-        case .typeConstructor:
+        case .type:
             return true
         default:
             return false
@@ -65,8 +65,8 @@ extension Type: Equatable {
             return l == r
         case (.arrow(let l1, let l2), .arrow(let r1, let r2)):
             return l1 == r1 && l2 == r2
-        case (.typeConstructor(let l1, let l2), .typeConstructor(let r1, let r2)):
-            return l1 == r1 && l2 == r2
+        case (.type(let name1), .type(let name2)):
+            return name1 == name2
         default:
             return false
         }
@@ -78,14 +78,12 @@ extension Type: Equatable {
 extension Type: CustomStringConvertible {
     var description: String {
         switch self {
-        case .typeVar(let s):
-            return s
+        case .typeVar(let name):
+            return name
         case .arrow(let t1, let t2):
             return "( " + t1.description + " > " + t2.description + ")"
-        case .typeConstructor(let k, let ts):
-            return k + (ts.isEmpty
-                ? ""
-                : "[" + ts.map { $0.description }.reduce("", +)) + "]"
+        case .type(let name):
+            return name
         }
     }
 }

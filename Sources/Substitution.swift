@@ -54,8 +54,8 @@ struct Substitution {
         case .arrow(let from, let to):
             return .arrow(apply(type: from), apply(type: to))
 
-        case .typeConstructor(let k, let ts):
-            return .typeConstructor(k, ts.map(apply))
+        case .type(let name):
+            return .type(name)
         }
     }
 
