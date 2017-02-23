@@ -79,7 +79,7 @@ extension Type: CustomStringConvertible {
     var description: String {
         switch self {
         case .typeVar(let name):
-            return name
+            return "_\(name)"
         case .arrow(let t1, let t2):
             return "( " + t1.description + " > " + t2.description + ")"
         case .type(let name):
