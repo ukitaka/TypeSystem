@@ -32,6 +32,18 @@ struct Substitution {
         self.substitutions = substitutions
     }
 
+    // MARK: - 
+
+    var domain: [TypeVar] {
+        return Array(substitutions.keys)
+    }
+
+    var range: [Type] {
+        return Array(substitutions.values)
+    }
+
+    // MARK: - apply
+
     func lookup(typeVar: TypeVar) -> Type {
         assert(typeVar.isTypeVar)
         if let type = substitutions[typeVar] {
@@ -59,9 +71,7 @@ struct Substitution {
         }
     }
 
-    func extend(typeVar: TypeVar, type: Type) -> Substitution {
-        return Substitution(substitutions: substitutions.union([typeVar:type]))
-    }
+    // MARK: - unify
 
     func unifies(equation: Equation) -> Bool {
         return apply(type: equation.left) == apply(type: equation.right)
