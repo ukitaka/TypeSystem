@@ -61,6 +61,17 @@ extension Type {
             return false
         }
     }
+
+    var typeVars: [TypeVar] {
+        switch self {
+        case .type:
+            return []
+        case .typeVar:
+            return [self]
+        case .arrow(let l, let r):
+            return l.typeVars + r.typeVars
+        }
+    }
 }
 
 // MARK: - Equatable
