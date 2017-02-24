@@ -9,13 +9,19 @@
 import Foundation
 
 struct TypingContext {
-    fileprivate let assumptions: Set<TermVar>
+    let assumptions: [TermVar]
 
     init() {
         self.assumptions = []
     }
 
-    init(assumptions: Set<TermVar>) {
+    init(assumptions: [TermVar]) {
         self.assumptions = assumptions
     }
+}
+
+// MARK: - Substitution
+
+extension Substitution {
+    
 }
