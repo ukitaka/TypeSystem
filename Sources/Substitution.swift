@@ -108,9 +108,10 @@ extension Substitution {
             return mgu(eq: eq.swap())
         case (.arrow(let t1, let t2), .arrow(let u1, let u2)):
             return self.mgu(eq: Equation(left: t2, right: u2)).mgu(eq: Equation(left: t1, right: u1))
+        case (.type(let a), .type(let b)) where a == b:
+            return self
         default:
-            // TODO: あとで修正する
-            fatalError("not implemented")
+            fatalError("Unification error. \(eq)")
         }
     }
 }
