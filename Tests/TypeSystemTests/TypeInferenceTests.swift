@@ -4,9 +4,20 @@ import XCTest
 class TypeSystemTests: XCTestCase {
     static var allTests : [(String, (TypeSystemTests) -> () throws -> Void)] {
         return [
-            ("testSubstitution", TypeSystemTests.testSubstitution)
+            ("testApplySubstitutionToType",
+             TypeSystemTests.testApplySubstitutionToType),
+            ("testApplySubstitutionToTypingContext",
+             TypeSystemTests.testApplySubstitutionToTypingContext),
+            ("testComposeSubstitution",
+             TypeSystemTests.testComposeSubstitution)
         ]
     }
+
+    // MRK: - Terms
+
+    let x = Term.var("x")
+    let y = Term.var("y")
+    let z = Term.var("z")
 
     // MARK: - Types
 
@@ -21,7 +32,7 @@ class TypeSystemTests: XCTestCase {
     
     // MARK: - Substitution Tests
 
-    func testSubstitution() {
+    func testApplySubstitutionToType() {
         let σ: (Type) -> Type = Substitution(
             X ↦ T,
             Y ↦ S
@@ -34,6 +45,27 @@ class TypeSystemTests: XCTestCase {
         XCTAssertEqual(σ(S), S)
         XCTAssertEqual(σ(X → X), σ(X) → σ(X))
         XCTAssertEqual(σ(X → X), T → T)
+    }
+
+    func testApplySubstitutionToTypingContext() {
+        let σ: (TypingContext) -> TypingContext = Substitution(
+            X ↦ T,
+            Y ↦ S
+        ).apply
+
+        let Γ: TypingContext = [
+            x: X,
+            y: Y,
+            z: Z
+        ]
+
+        let expectedΓ: TypingContext = [
+            x: T,
+            y: S,
+            z: Z
+        ]
+
+        XCTAssertEqual(σ(Γ), expectedΓ)
     }
 
     func testComposeSubstitution() {

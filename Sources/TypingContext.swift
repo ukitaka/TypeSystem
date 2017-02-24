@@ -20,8 +20,33 @@ struct TypingContext {
     }
 }
 
-// MARK: - Substitution
+// MARK: - ExpressibleByDictionaryLiteral
 
-extension Substitution {
-    
+extension TypingContext: ExpressibleByDictionaryLiteral {
+    typealias Key = Term
+    typealias Value = Type
+
+    init(_ elements: (Key, Value)...) {
+        var assumptions: [Key: Value] = [:]
+        for (key, value) in elements {
+            assumptions[key] = value
+        }
+        self.assumptions = assumptions
+    }
+
+    init(dictionaryLiteral elements: (Key, Value)...) {
+        var assumptions: [Key: Value] = [:]
+        for (key, value) in elements {
+            assumptions[key] = value
+        }
+        self.assumptions = assumptions
+    }
+}
+
+// MARK: - Equatable
+
+extension TypingContext: Equatable {
+    static func == (lhs: TypingContext, rhs: TypingContext) -> Bool {
+        return lhs.assumptions == rhs.assumptions
+    }
 }
