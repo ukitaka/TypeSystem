@@ -108,24 +108,6 @@ extension Substitution {
             .map(unifies)
             .reduce(true) { $0.0 && $0.1 }
     }
-
-    func mgu(eq: Equation) -> Substitution {
-        let (left, right) = (eq.left, eq.right)
-        switch (apply(type: left), apply(type: right)) {
-        case (.typeVar(let a), .typeVar(let b)) where a == b:
-            return self.extends(typeVar: .typeVar(a), type: right)
-        case (.typeVar(let a), _) where !right.typeVars.contains(.typeVar(a)):
-            return self.extends(typeVar: .typeVar(a), type: right)
-        case (_, .typeVar):
-            return mgu(eq: eq.swap())
-        case (.arrow(let t1, let t2), .arrow(let u1, let u2)):
-            return self.mgu(eq: Equation(left: t2, right: u2)).mgu(eq: Equation(left: t1, right: u1))
-        case (.type(let a), .type(let b)) where a == b:
-            return self
-        default:
-            fatalError("Unification error. \(eq)")
-        }
-    }
 }
 
 // MARK: - ExpressibleByDictionaryLiteral
