@@ -13,7 +13,6 @@ struct TypeSystem {
     let constraintSet: ConstraintSet
 
     func types(term: Term) -> Type {
-
         return .bool // FIXME
     }
 }
