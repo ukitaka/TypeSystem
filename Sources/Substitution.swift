@@ -106,6 +106,8 @@ extension Substitution {
             return self.extends(typeVar: .typeVar(a), type: right)
         case (_, .typeVar):
             return mgu(eq: eq.swap())
+        case (.arrow(let t1, let t2), .arrow(let u1, let u2)):
+            return self.mgu(eq: Equation(left: t2, right: u2)).mgu(eq: Equation(left: t1, right: u1))
         default:
             // TODO: あとで修正する
             fatalError("not implemented")
