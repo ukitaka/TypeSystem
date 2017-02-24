@@ -9,13 +9,13 @@
 import Foundation
 
 struct TypingContext {
-    let assumptions: [TermVar]
+    let assumptions: [Term: Type]
 
     init() {
-        self.assumptions = []
+        self.assumptions = [:]
     }
 
-    init(assumptions: [TermVar]) {
+    init(assumptions: [Term: Type]) {
         self.assumptions = assumptions
     }
 }

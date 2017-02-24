@@ -64,19 +64,12 @@ struct Substitution {
         }
     }
 
-    func apply(term: Term) -> Term {
-        switch term {
-        case .var(let name, let type):
-            return .var(name, apply(type: type))
-        case .lambda(let x, let e):
-            return .lambda(x, apply(term: e))
-        case .apply(let termL, let termR):
-            return .apply(apply(term: termL), apply(term: termR))
-        }
-    }
-
     func apply(typingContext: TypingContext) -> TypingContext {
-        return TypingContext(assumptions: typingContext.assumptions.map(apply))
+        var assumptions: [Term: Type] = [:]
+        for (term, type) in typingContext.assumptions {
+            assumptions[term] = apply(type: type)
+        }
+        return TypingContext(assumptions: assumptions)
     }
 
     // MARK: - unify
