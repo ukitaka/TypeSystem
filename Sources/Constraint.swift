@@ -18,6 +18,10 @@ struct Equation {
         self.left = left
         self.right = right
     }
+
+    func swap() -> Equation {
+        return Equation(left: right, right: left)
+    }
 }
 
 // MARK: - Euqtable

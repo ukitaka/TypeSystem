@@ -104,6 +104,8 @@ extension Substitution {
             return self.extends(typeVar: .typeVar(a), type: right)
         case (.typeVar(let a), _) where !right.typeVars.contains(.typeVar(a)):
             return self.extends(typeVar: .typeVar(a), type: right)
+        case (_, .typeVar):
+            return mgu(eq: eq.swap())
         default:
             // TODO: あとで修正する
             fatalError("not implemented")
