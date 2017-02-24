@@ -20,9 +20,19 @@ struct Equation {
     }
 }
 
+// MARK: - Euqtable
+
 extension Equation: Equatable {
     static func == (lhs: Equation, rhs: Equation) -> Bool {
         return lhs.left == rhs.left && lhs.right == rhs.right
+    }
+}
+
+// MARK: - CustomStringConvertible
+
+extension Equation: CustomStringConvertible {
+    var description: String {
+        return left.description + " = " + right.description
     }
 }
 
