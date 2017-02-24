@@ -14,6 +14,37 @@ indirect enum Term {
     case apply(Term, Term)
 }
 
+// MARK: -
+
+extension Term {
+    var isVar: Bool {
+        switch self {
+        case .var:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var isLambda: Bool {
+        switch self {
+        case .lambda:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var isApply: Bool {
+        switch self {
+        case .apply:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 // MARK: - Equatable
 
 extension Term: Equatable {
