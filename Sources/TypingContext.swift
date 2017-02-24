@@ -18,6 +18,10 @@ struct TypingContext {
     init(assumptions: [Term: Type]) {
         self.assumptions = assumptions
     }
+
+    func types(term: Term) -> Type? {
+        return assumptions[term]
+    }
 }
 
 // MARK: - ExpressibleByDictionaryLiteral

@@ -18,6 +18,7 @@ class TypeSystemTests: XCTestCase {
     let x = Term.var("x")
     let y = Term.var("y")
     let z = Term.var("z")
+    let t = Term.var("t")
 
     // MARK: - Types
 
@@ -86,5 +87,15 @@ class TypeSystemTests: XCTestCase {
         XCTAssertEqual(σ(Z), U)
         XCTAssertEqual(σ(T), T)
         XCTAssertEqual(σ(S), S)
+    }
+
+    // MARK: - TypingContext tests
+
+    func testTyingContext() {
+        let Γ: TypingContext = [
+            t: T,
+        ]
+
+        XCTAssertEqual(Γ ⊢ t, T)
     }
 }

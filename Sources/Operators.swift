@@ -46,3 +46,11 @@ infix operator ∋
 func ∋ (lhs: Substitution, rhs: (TypeVar, ConcreteType)) -> Bool {
     return lhs.contains(rhs)
 }
+
+// MARK: - 
+
+infix operator ⊢
+
+func ⊢ (lhs: TypingContext, rhs: Term) -> Type? {
+    return lhs.types(term: rhs)
+}
