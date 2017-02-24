@@ -8,8 +8,12 @@
 
 import Foundation
 
+
+
 indirect enum Term {
     case `var`(String)
+    case nat(Nat)
+    case bool(Bool)
     case lambda(String, Term)
     case apply(Term, Term)
 }
@@ -62,6 +66,10 @@ extension Term: Equatable {
             return nameL == nameR && termL == termR
         case (.apply(let termL1, let termL2), .apply(let termR1, let termR2)):
             return termL1 == termR1 && termL2 == termR2
+        case (.bool(let b1), .bool(let b2)):
+            return b1 == b2
+        case (.nat(let n1), .nat(let n2)):
+            return n1 == n2
         default:
             return false
         }
@@ -79,6 +87,10 @@ extension Term: CustomStringConvertible {
             return "λ" + name + ". " + term.description
         case .apply(let term1, let term2):
             return term1.description + " " + term2.description
+        case .bool(let b):
+            return b ? "true" : "false"
+        case .nat(let n):
+            return n.description
         }
     }
 }
