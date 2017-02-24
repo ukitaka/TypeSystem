@@ -8,6 +8,7 @@ Swiftで書かれていて、
 本中の表現をなるべくそのままコードに落とし込めるようにしてあります。
 
 ```swift
+// Substitution
 let σ = Substitution(
     X ↦ T,
     Y ↦ S
@@ -16,6 +17,15 @@ let σ = Substitution(
 XCTAssertEqual(σ(X), T)
 XCTAssertEqual(σ(X → X), σ(X) → σ(X))
 XCTAssertEqual(σ(X → X), T → T)
+
+// TypingContext
+let Γ: TypingContext = [
+    x: X,
+    y: Y,
+    z: Z
+]
+
+XCTAssertEqual(σ(Γ), expectedΓ)
 ```
 
 ## Generate `.xcodeproj`
