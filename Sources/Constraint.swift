@@ -54,9 +54,25 @@ struct ConstraintSet {
     }
 }
 
+// MARK: - CustomStringConvertible
+
 extension ConstraintSet: CustomStringConvertible {
     var description: String {
         return equations.map { $0.description }
             .joined(separator: "\n")
+    }
+}
+
+// MARK: - ExpressibleByDictionaryLiteral
+
+extension ConstraintSet: ExpressibleByArrayLiteral {
+    typealias Element = Equation
+
+    init(arrayLiteral elements: Equation...) {
+        self.equations = elements
+    }
+    
+    init(_ elements: Equation...) {
+        self.equations = elements
     }
 }

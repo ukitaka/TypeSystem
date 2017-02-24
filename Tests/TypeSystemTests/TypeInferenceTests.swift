@@ -103,10 +103,10 @@ class TypeSystemTests: XCTestCase {
 
     // MARK: - 
     func testUnifyConstraintSet() {
-        let C = ConstraintSet(equations: [
+        let C: ConstraintSet = [
             X ==== (Y → Z),
             Y ==== T,
-        ])
+        ]
 
         let σ = unify(C)
 
