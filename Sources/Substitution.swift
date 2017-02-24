@@ -37,6 +37,12 @@ extension Substitution {
     func contains(_ s: (TypeVar, Type)) -> Bool {
         return substitutions[s.0] == s.1
     }
+
+    func extends(typeVar: TypeVar, type: Type) -> Substitution {
+        var substitutions = self.substitutions
+        substitutions[typeVar] = type
+        return Substitution(substitutions: substitutions)
+    }
 }
 
 // MARK: - apply
