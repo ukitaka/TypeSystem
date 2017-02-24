@@ -82,6 +82,14 @@ extension Substitution {
         }
         return TypingContext(assumptions: assumptions)
     }
+
+    func apply(equation: Equation) -> Equation {
+        return Equation(left: apply(type: equation.left), right: apply(type: equation.right))
+    }
+
+    func apply(constaintSet: ConstraintSet) -> ConstraintSet {
+        return ConstraintSet(equations: constaintSet.equations.map(apply))
+    }
 }
 
 // MARK: - unify
