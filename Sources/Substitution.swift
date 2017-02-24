@@ -133,6 +133,26 @@ extension Substitution: ExpressibleByDictionaryLiteral {
     }
 }
 
+// MARK: - Equatable
+
+extension Substitution: Equatable {
+    static func == (lhs: Substitution, rhs: Substitution) -> Bool {
+        return lhs.substitutions == rhs.substitutions
+    }
+}
+
+// MARK: - CustomStringConvertible
+
+extension Substitution: CustomStringConvertible {
+    var description: String {
+        return substitutions
+            .map { (typeVar, type) -> String in
+                typeVar.description + " ↦ " + type.description
+            }
+            .joined(separator: "\n")
+    }
+}
+
 // MARK: - Composition
 
 func • (σ: Substitution, γ: Substitution) -> Substitution {

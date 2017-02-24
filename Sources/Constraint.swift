@@ -53,3 +53,10 @@ struct ConstraintSet {
         self.equations = equations
     }
 }
+
+extension ConstraintSet: CustomStringConvertible {
+    var description: String {
+        return equations.map { $0.description }
+            .joined(separator: "\n")
+    }
+}

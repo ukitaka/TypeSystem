@@ -99,7 +99,7 @@ extension Type: CustomStringConvertible {
         case .typeVar(let name):
             return "_\(name)"
         case .arrow(let t1, let t2):
-            return "( " + t1.description + " > " + t2.description + ")"
+            return "(" + t1.description + " → " + t2.description + ")"
         case .type(let name):
             return name
         }

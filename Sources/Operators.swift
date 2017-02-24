@@ -54,3 +54,11 @@ infix operator ⊢
 func ⊢ (lhs: TypingContext, rhs: Term) -> Type? {
     return lhs.types(term: rhs)
 }
+
+// MARK: -
+
+infix operator ====
+
+func ==== (lhs: Type, rhs: Type) -> Equation {
+    return Equation(left: lhs, right: rhs)
+}

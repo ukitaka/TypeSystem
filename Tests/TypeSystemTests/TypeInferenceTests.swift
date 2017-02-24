@@ -9,7 +9,9 @@ class TypeSystemTests: XCTestCase {
             ("testApplySubstitutionToTypingContext",
              TypeSystemTests.testApplySubstitutionToTypingContext),
             ("testComposeSubstitution",
-             TypeSystemTests.testComposeSubstitution)
+             TypeSystemTests.testComposeSubstitution),
+            ("testUnifyConstraintSet",
+             TypeSystemTests.testUnifyConstraintSet)
         ]
     }
 
@@ -97,5 +99,22 @@ class TypeSystemTests: XCTestCase {
         ]
 
         XCTAssertEqual(Γ ⊢ t, T)
+    }
+
+    // MARK: - 
+    func testUnifyConstraintSet() {
+        let C = ConstraintSet(equations: [
+            X ==== (Y → Z),
+            Y ==== T,
+        ])
+
+        let σ = unify(C)
+
+        let expectedσ = Substitution(
+            X ↦ (T → Z),
+            Y ↦ T
+        )
+
+        XCTAssertEqual(σ, expectedσ)
     }
 }
