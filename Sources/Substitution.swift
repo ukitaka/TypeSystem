@@ -96,6 +96,19 @@ extension Substitution {
             .map(unifies)
             .reduce(true) { $0.0 && $0.1 }
     }
+
+    func mgu(eq: Equation) -> Substitution {
+        let (left, right) = (eq.left, eq.right)
+        switch (apply(type: left), apply(type: right)) {
+        case (.typeVar(let a), .typeVar(let b)) where a == b:
+            return self.extends(typeVar: .typeVar(a), type: right)
+        case (.typeVar(let a), _) where !right.typeVars.contains(.typeVar(a)):
+            return self.extends(typeVar: .typeVar(a), type: right)
+        default:
+            // TODO: あとで修正する
+            fatalError("not implemented")
+        }
+    }
 }
 
 // MARK: - ExpressibleByDictionaryLiteral
