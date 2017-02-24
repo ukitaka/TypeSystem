@@ -91,8 +91,8 @@ extension Substitution {
         return Equation(left: apply(type: equation.left), right: apply(type: equation.right))
     }
 
-    func apply(constaintSet: ConstraintSet) -> ConstraintSet {
-        return ConstraintSet(equations: constaintSet.equations.map(apply))
+    func apply(constraintSet: ConstraintSet) -> ConstraintSet {
+        return ConstraintSet(equations: constraintSet.equations.map(apply))
     }
 }
 
