@@ -22,7 +22,7 @@ class TypeSystemTests: XCTestCase {
     // MARK: - Substitution Tests
 
     func testSubstitution() {
-        let σ = Substitution(
+        let σ: (Type) -> Type = Substitution(
             X ↦ T,
             Y ↦ S
         ).apply
@@ -47,7 +47,7 @@ class TypeSystemTests: XCTestCase {
             Z ↦ U
         )
 
-        let σ = (σ1 • σ2).apply
+        let σ: (Type) -> Type = (σ1 • σ2).apply
         
         XCTAssertEqual(σ(X), T)
         XCTAssertEqual(σ(Y), R)
