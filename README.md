@@ -20,12 +20,10 @@ XCTAssertEqual(σ(X → X), T → T)
 
 // TypingContext
 let Γ: TypingContext = [
-    x: X,
-    y: Y,
-    z: Z
+    t: T,
 ]
 
-XCTAssertEqual(σ(Γ), expectedΓ)
+XCTAssertEqual(Γ ⊢ t, T)
 ```
 
 ## Generate `.xcodeproj`
