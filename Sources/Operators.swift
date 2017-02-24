@@ -1,6 +1,6 @@
 //
 //  Operators.swift
-//  TypeInference
+//  TypeSystem
 //
 //  Created by Yuki Takahashi on 2017/02/23.
 //

@@ -1,10 +1,10 @@
 import XCTest
-@testable import TypeInference
+@testable import TypeSystem
 
-class TypeInferenceTests: XCTestCase {
-    static var allTests : [(String, (TypeInferenceTests) -> () throws -> Void)] {
+class TypeSystemTests: XCTestCase {
+    static var allTests : [(String, (TypeSystemTests) -> () throws -> Void)] {
         return [
-            ("testSubstitution", TypeInferenceTests.testSubstitution)
+            ("testSubstitution", TypeSystemTests.testSubstitution)
         ]
     }
 
