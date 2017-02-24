@@ -9,7 +9,7 @@
 import Foundation
 
 indirect enum Term {
-    case `var`(String)
+    case `var`(String, Type)
     case lambda(String, Term)
     case apply(Term, Term)
 }
@@ -50,8 +50,8 @@ extension Term {
 extension Term: Equatable {
     static func ==(lhs: Term, rhs: Term) -> Bool {
         switch (lhs, rhs) {
-        case (.var(let nameL), .var(let nameR)):
-            return nameL == nameR
+        case (.var(let nameL, let typeL), .var(let nameR, let typeR)):
+            return nameL == nameR && typeL == typeR
         case (.lambda(let nameL, let termL), .lambda(let nameR, let termR)):
             return nameL == nameR && termL == termR
         case (.apply(let termL1, let termL2), .apply(let termR1, let termR2)):
@@ -67,8 +67,8 @@ extension Term: Equatable {
 extension Term: CustomStringConvertible {
     var description: String {
         switch self {
-        case .var(let name):
-            return name
+        case .var(let name, let type):
+            return name + ": " + type.description
         case .lambda(let name, let term):
             return "λ" + name + ". " + term.description
         case .apply(let term1, let term2):
