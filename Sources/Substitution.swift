@@ -16,6 +16,10 @@ struct Substitution {
     init() {
         self.substitutions = [:]
     }
+    
+    init(typeVar: TypeVar, type: Type) {
+        self.substitutions = [typeVar: type]
+    }
 
     init(substitutions: [TypeVar: Type]) {
         self.substitutions = substitutions
