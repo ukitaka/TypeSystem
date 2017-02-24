@@ -20,8 +20,11 @@ struct Substitution {
     init(substitutions: [TypeVar: Type]) {
         self.substitutions = substitutions
     }
+}
 
-    // MARK: - 
+// MARK: - utils
+
+extension Substitution {
 
     var domain: [TypeVar] {
         return Array(substitutions.keys)
@@ -34,9 +37,11 @@ struct Substitution {
     func contains(_ s: (TypeVar, Type)) -> Bool {
         return substitutions[s.0] == s.1
     }
+}
 
-    // MARK: - apply
+// MARK: - apply
 
+extension Substitution {
     func lookup(typeVar: TypeVar) -> Type {
         assert(typeVar.isTypeVar)
         if let type = substitutions[typeVar] {
@@ -71,9 +76,11 @@ struct Substitution {
         }
         return TypingContext(assumptions: assumptions)
     }
+}
 
-    // MARK: - unify
+// MARK: - unify
 
+extension Substitution {
     func unifies(equation: Equation) -> Bool {
         return apply(type: equation.left) == apply(type: equation.right)
     }
@@ -85,7 +92,7 @@ struct Substitution {
     }
 }
 
-// MARK: - 
+// MARK: - ExpressibleByDictionaryLiteral
 
 extension Substitution: ExpressibleByDictionaryLiteral {
     typealias Key = TypeVar
@@ -108,7 +115,7 @@ extension Substitution: ExpressibleByDictionaryLiteral {
     }
 }
 
-// MARK: - 
+// MARK: - Composition
 
 func • (σ: Substitution, γ: Substitution) -> Substitution {
     var substitutions: [TypeVar: Type] = [:]
