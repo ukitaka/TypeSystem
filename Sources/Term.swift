@@ -45,6 +45,12 @@ extension Term {
     }
 }
 
+// MARK: - workaround
+
+typealias TermVar = Term
+typealias Lambda = Term
+typealias Apply = Term
+
 // MARK: - Equatable
 
 extension Term: Equatable {
