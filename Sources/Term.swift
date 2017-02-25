@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 indirect enum Term {
     case `var`(String)
     case nat(Nat)
