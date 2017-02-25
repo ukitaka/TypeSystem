@@ -92,7 +92,7 @@ extension Substitution {
     }
 
     func apply(constraintSet: ConstraintSet) -> ConstraintSet {
-        return ConstraintSet(equations: constraintSet.equations.map(apply))
+        return ConstraintSet(equations: constraintSet.map(apply))
     }
 }
 
@@ -104,7 +104,7 @@ extension Substitution {
     }
 
     func unifies(constraintSet: ConstraintSet) -> Bool {
-        return constraintSet.equations
+        return constraintSet
             .map(unifies)
             .reduce(true) { $0.0 && $0.1 }
     }

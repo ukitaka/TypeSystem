@@ -43,7 +43,7 @@ extension Equation: CustomStringConvertible {
 // MARK: - Constraint Set
 
 struct ConstraintSet {
-    let equations: [Equation]
+    fileprivate let equations: [Equation]
 
     init(equation: Equation) {
         self.equations = [equation]
@@ -66,13 +66,23 @@ extension ConstraintSet: CustomStringConvertible {
 // MARK: - ExpressibleByDictionaryLiteral
 
 extension ConstraintSet: ExpressibleByArrayLiteral {
-    typealias Element = Equation
-
     init(arrayLiteral elements: Equation...) {
         self.equations = elements
     }
     
     init(_ elements: Equation...) {
         self.equations = elements
+    }
+}
+
+// MARK: - Sequence
+
+extension ConstraintSet: Sequence {
+    func makeIterator() -> IndexingIterator<[Equation]> {
+        return equations.makeIterator()
+    }
+
+    var first: Equation? {
+        return equations.first
     }
 }
