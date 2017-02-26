@@ -9,14 +9,31 @@
 import Foundation
 
 indirect enum 𝔹ℕ: Term {
-    case `var`(String)
+    case `var`(String, Type)
     case zero
     case succ(𝔹ℕ)
     case pred(𝔹ℕ)
     case `true`
     case `false`
     case isZero(𝔹ℕ)
-    case ifThen(𝔹ℕ, 𝔹ℕ, 𝔹ℕ)
+    case ifThen(𝔹ℕ, 𝔹ℕ, 𝔹ℕ, Type)
+}
+
+extension 𝔹ℕ {
+    var type: Type {
+        switch self {
+        case .var(_, let t):
+            return t
+        case .zero, .succ, .pred:
+            return 𝔹ℕ.Nat
+        case .false, .true:
+            return 𝔹ℕ.Bool
+        case .isZero:
+            return 𝔹ℕ.Bool
+        case .ifThen(_, _, _, let t):
+            return t
+        }
+    }
 }
 
 // MARK: Typing Context
@@ -56,8 +73,8 @@ extension 𝔹ℕ: Equatable {
             return true
         case (.isZero(let z1), .isZero(let z2)):
             return z1 == z2
-        case (.ifThen(let c1, let t1, let e1), .ifThen(let c2, let t2, let e2)):
-            return c1 == c2 && t1 == t2 && e1 == e2
+        case (.ifThen(let c1, let t1, let e1, let ty1), .ifThen(let c2, let t2, let e2, let ty2)):
+            return c1 == c2 && t1 == t2 && e1 == e2 && ty1 == ty2
         default:
             return false
         }
@@ -69,7 +86,7 @@ extension 𝔹ℕ: Equatable {
 extension 𝔹ℕ: CustomStringConvertible {
     var description: String {
         switch self {
-        case .var(let name):
+        case .var(let name, _):
             return name
         case .zero:
             return "0"
@@ -83,7 +100,7 @@ extension 𝔹ℕ: CustomStringConvertible {
             return "false"
         case .isZero(let z):
             return "isZero \(z)"
-        case .ifThen(let c, let t, let e):
+        case .ifThen(let c, let t, let e, _):
             return "if \(c) then \(t) else \(e)"
         }
     }
