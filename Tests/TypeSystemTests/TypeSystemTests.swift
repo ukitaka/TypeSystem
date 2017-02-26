@@ -121,4 +121,20 @@ class TypeSystemTests: XCTestCase {
         XCTAssertEqual(σ, expectedσ)
     }
 
+    // MARK : - Constraint generatoin
+
+    func testGenerateConstraintSet() {
+        let term: 𝔹ℕ = .ifThen(.isZero(.var("x", X)), .var("z", Z), .var("y", Y))
+        let C = generateConstraint(term: term)
+
+        let σ = unify(C)
+
+        let expectedσ = Substitution(
+            X ↦ 𝔹ℕ.Nat,
+            Z ↦ Y
+        )
+
+        XCTAssertEqual(σ, expectedσ)
+    }
+
 }
