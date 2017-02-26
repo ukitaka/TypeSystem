@@ -11,3 +11,5 @@ import Foundation
 protocol Term: Hashable {
  
 }
+
+typealias TypedTerm<T: Term> = (term: T, type: Type)
