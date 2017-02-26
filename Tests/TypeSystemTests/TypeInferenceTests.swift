@@ -17,10 +17,12 @@ class TypeSystemTests: XCTestCase {
 
     // MRK: - Terms
 
-    let x = Term.var("x")
-    let y = Term.var("y")
-    let z = Term.var("z")
-    let t = Term.var("t")
+    typealias STLC = SimplyTypedLambdaCalculus
+
+    let x = STLC.var("x")
+    let y = STLC.var("y")
+    let z = STLC.var("z")
+    let t = STLC.var("t")
 
     // MARK: - Types
 
@@ -51,7 +53,7 @@ class TypeSystemTests: XCTestCase {
     }
 
     func testApplySubstitutionToTypingContext() {
-        let σ: (TypingContext) -> TypingContext = Substitution(
+        let σ: (TypingContext<STLC>) -> TypingContext<STLC> = Substitution(
             X ↦ T,
             Y ↦ S
         ).apply

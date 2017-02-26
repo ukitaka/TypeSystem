@@ -71,20 +71,16 @@ extension Substitution {
         return type.substitute(self)
     }
 
-    func apply(typingContext: TypingContext) -> TypingContext {
-        var assumptions: [Term: Type] = [:]
-        for (term, type) in typingContext.assumptions {
-            assumptions[term] = apply(type: type)
-        }
-        return TypingContext(assumptions: assumptions)
-    }
-
     func apply(equation: Equation) -> Equation {
         return equation.substitute(self)
     }
 
     func apply(constraintSet: ConstraintSet) -> ConstraintSet {
         return constraintSet.substitute(self)
+    }
+
+    func apply<T: Term>(typingContext: TypingContext<T>) -> TypingContext<T> {
+        return typingContext.substitute(self)
     }
 }
 

@@ -51,7 +51,7 @@ func ∋ (lhs: Substitution, rhs: (TypeVar, ConcreteType)) -> Bool {
 
 infix operator ⊢
 
-func ⊢ (lhs: TypingContext, rhs: Term) -> Type? {
+func ⊢ <T: Term>(lhs: TypingContext<T>, rhs: T) -> Type? {
     return lhs.types(term: rhs)
 }
 
