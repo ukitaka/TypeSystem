@@ -74,6 +74,29 @@ extension Type {
     }
 }
 
+// MARK: - Substitutable
+
+extension Type: Substitutable {
+    func substitute(_ s: Substitution) -> Type {
+        switch self {
+        case .typeVar:
+            let lookedupType = s.lookup(typeVar: self)
+            if (self == lookedupType) {
+                return self
+            } else {
+                return s.apply(type: lookedupType)
+            }
+
+        case .arrow(let from, let to):
+            return .arrow(s.apply(type: from), s.apply(type: to))
+            
+        case .type(let name):
+            return .type(name)
+        }
+    }
+}
+
+
 // MARK: - Equatable
 
 extension Type: Equatable {
