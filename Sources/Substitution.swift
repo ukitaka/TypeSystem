@@ -26,6 +26,12 @@ struct Substitution {
     }
 }
 
+// MARK: - Substitutable
+
+protocol Substitutable {
+    func substitute(_ substitution: Substitution) -> Self
+}
+
 // MARK: - utils
 
 extension Substitution {
