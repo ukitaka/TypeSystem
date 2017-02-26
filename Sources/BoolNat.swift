@@ -9,14 +9,14 @@
 import Foundation
 
 indirect enum 𝔹ℕ: Term {
-    case `var`(Type)
+    case `var`(String)
     case zero
-    case succ(𝔹ℕ)
-    case pred(𝔹ℕ)
+    case succ(TypedTerm<𝔹ℕ>)
+    case pred(TypedTerm<𝔹ℕ>)
     case `true`
     case `false`
-    case isZero(𝔹ℕ)
-    case ifThen(𝔹ℕ, 𝔹ℕ, 𝔹ℕ)
+    case isZero(TypedTerm<𝔹ℕ>)
+    case ifThen(TypedTerm<𝔹ℕ>, TypedTerm<𝔹ℕ>, TypedTerm<𝔹ℕ>)
 }
 
 // MARK: Typing Context
@@ -44,8 +44,8 @@ extension 𝔹ℕ {
 extension 𝔹ℕ: Equatable {
     static func ==(lhs: 𝔹ℕ, rhs: 𝔹ℕ) -> Bool {
         switch (lhs, rhs) {
-        case (.var(let t1), .var(let t2)):
-            return t1 == t2
+        case (.var(let name1), .var(let name2)):
+            return name1 == name2
         case (.succ(let n1), .succ(let n2)):
             return n1 == n2
         case (.pred(let n1), .pred(let n2)):
@@ -69,22 +69,22 @@ extension 𝔹ℕ: Equatable {
 extension 𝔹ℕ: CustomStringConvertible {
     var description: String {
         switch self {
-        case .var(let type):
-            return type.description
+        case .var(let name):
+            return name
         case .zero:
             return "0"
         case .succ(let n):
-            return "succ \(n)"
+            return "succ \(n.term)"
         case .pred(let n):
-            return "pred \(n)"
+            return "pred \(n.term)"
         case .true:
             return "true"
         case .false:
             return "false"
         case .isZero(let z):
-            return "isZero \(z)"
+            return "isZero \(z.term)"
         case .ifThen(let c, let t, let e):
-            return "if \(c) then \(t) else \(e)"
+            return "if \(c.term) then \(t.term) else \(e.term)"
         }
     }
 }

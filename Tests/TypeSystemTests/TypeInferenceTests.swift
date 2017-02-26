@@ -121,10 +121,4 @@ class TypeSystemTests: XCTestCase {
         XCTAssertEqual(σ, expectedσ)
     }
 
-    // MARK: - 
-
-    func testBN() {
-        // if iszero 0 then 1 else 2
-        𝔹ℕ.ifThen(.isZero(.zero), .succ(.zero), .succ(.succ(.zero)))
-    }
 }
