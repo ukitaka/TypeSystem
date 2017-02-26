@@ -19,6 +19,26 @@ indirect enum 𝔹ℕ: Term {
     case ifThen(𝔹ℕ, 𝔹ℕ, 𝔹ℕ)
 }
 
+// MARK: Typing Context
+
+extension 𝔹ℕ {
+    var Nat: Type {
+        return .type("Nat")
+    }
+
+    var Bool: Type {
+        return .type("Bool")
+    }
+
+    var Γ: TypingContext<𝔹ℕ> {
+        return TypingContext<𝔹ℕ>(assumptions: [
+            .zero: Nat,
+            .true: Bool,
+            .false: Bool,
+        ])
+    }
+}
+
 // MARK: - Equatable
 
 extension 𝔹ℕ: Equatable {
