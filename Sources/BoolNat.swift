@@ -11,26 +11,26 @@ import Foundation
 indirect enum 𝔹ℕ: Term {
     case `var`(String)
     case zero
-    case succ(TypedTerm<𝔹ℕ>)
-    case pred(TypedTerm<𝔹ℕ>)
+    case succ(𝔹ℕ)
+    case pred(𝔹ℕ)
     case `true`
     case `false`
-    case isZero(TypedTerm<𝔹ℕ>)
-    case ifThen(TypedTerm<𝔹ℕ>, TypedTerm<𝔹ℕ>, TypedTerm<𝔹ℕ>)
+    case isZero(𝔹ℕ)
+    case ifThen(𝔹ℕ, 𝔹ℕ, 𝔹ℕ)
 }
 
 // MARK: Typing Context
 
 extension 𝔹ℕ {
-    var Nat: Type {
+    static var Nat: Type {
         return .type("Nat")
     }
 
-    var Bool: Type {
+   static var Bool: Type {
         return .type("Bool")
     }
 
-    var Γ: TypingContext<𝔹ℕ> {
+    static var Γ: TypingContext<𝔹ℕ> {
         return TypingContext<𝔹ℕ>(assumptions: [
             .zero: Nat,
             .true: Bool,
@@ -74,17 +74,17 @@ extension 𝔹ℕ: CustomStringConvertible {
         case .zero:
             return "0"
         case .succ(let n):
-            return "succ \(n.term)"
+            return "succ \(n)"
         case .pred(let n):
-            return "pred \(n.term)"
+            return "pred \(n)"
         case .true:
             return "true"
         case .false:
             return "false"
         case .isZero(let z):
-            return "isZero \(z.term)"
+            return "isZero \(z)"
         case .ifThen(let c, let t, let e):
-            return "if \(c.term) then \(t.term) else \(e.term)"
+            return "if \(c) then \(t) else \(e)"
         }
     }
 }
