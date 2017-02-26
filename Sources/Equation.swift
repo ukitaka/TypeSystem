@@ -22,6 +22,14 @@ struct Equation {
     }
 }
 
+// MARK: - Substitutable
+
+extension Equation: Substitutable {
+    func substitute(_ s: Substitution) -> Equation {
+        return Equation(left: s.apply(type: self.left), right: s.apply(type: self.right))
+    }
+}
+
 // MARK: - Euqtable
 
 extension Equation: Equatable {

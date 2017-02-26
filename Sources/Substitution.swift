@@ -80,7 +80,7 @@ extension Substitution {
     }
 
     func apply(equation: Equation) -> Equation {
-        return Equation(left: apply(type: equation.left), right: apply(type: equation.right))
+        return equation.substitute(self)
     }
 
     func apply(constraintSet: ConstraintSet) -> ConstraintSet {
