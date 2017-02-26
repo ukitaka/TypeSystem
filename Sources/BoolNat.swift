@@ -16,7 +16,7 @@ indirect enum 𝔹ℕ: Term {
     case `true`
     case `false`
     case isZero(𝔹ℕ)
-    case ifThen(𝔹ℕ, 𝔹ℕ, 𝔹ℕ, Type)
+    case ifThen(𝔹ℕ, 𝔹ℕ, 𝔹ℕ)
 }
 
 extension 𝔹ℕ {
@@ -30,13 +30,38 @@ extension 𝔹ℕ {
             return 𝔹ℕ.Bool
         case .isZero:
             return 𝔹ℕ.Bool
-        case .ifThen(_, _, _, let t):
-            return t
+        case .ifThen(_, let then, _):
+            return then.type
         }
     }
 }
 
-// MARK: Typing Context
+// MARK: - Generate constraint
+
+func generateConstraint(term: 𝔹ℕ) -> ConstraintSet {
+    switch term {
+    case .var:
+        return ConstraintSet()
+    case .zero:
+        return ConstraintSet()
+    case .succ(let t):
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t)
+    case .pred(let t):
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t)
+    case .false, .true:
+        return ConstraintSet()
+    case .isZero(let t):
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t)
+    case .ifThen(let cond, let then, let els):
+        return (then.type ==== els.type)
+            ∪ (cond.type ==== 𝔹ℕ.Bool)
+            ∪ generateConstraint(term: cond)
+            ∪ generateConstraint(term: then)
+            ∪ generateConstraint(term: els)
+    }
+}
+
+// MARK: - Typing Context
 
 extension 𝔹ℕ {
     static var Nat: Type {
@@ -73,8 +98,8 @@ extension 𝔹ℕ: Equatable {
             return true
         case (.isZero(let z1), .isZero(let z2)):
             return z1 == z2
-        case (.ifThen(let c1, let t1, let e1, let ty1), .ifThen(let c2, let t2, let e2, let ty2)):
-            return c1 == c2 && t1 == t2 && e1 == e2 && ty1 == ty2
+        case (.ifThen(let c1, let t1, let e1), .ifThen(let c2, let t2, let e2)):
+            return c1 == c2 && t1 == t2 && e1 == e2
         default:
             return false
         }
@@ -100,7 +125,7 @@ extension 𝔹ℕ: CustomStringConvertible {
             return "false"
         case .isZero(let z):
             return "isZero \(z)"
-        case .ifThen(let c, let t, let e, _):
+        case .ifThen(let c, let t, let e):
             return "if \(c) then \(t) else \(e)"
         }
     }

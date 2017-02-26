@@ -65,7 +65,11 @@ func ==== (lhs: Type, rhs: Type) -> Equation {
 
 // MARK: -
 
-infix operator ∪
+precedencegroup UnionPrecedenceRight {
+    associativity: left
+}
+
+infix operator ∪: UnionPrecedenceRight
 
 func ∪ (lhs: ConstraintSet, rhs: ConstraintSet) -> ConstraintSet {
     return lhs.union(rhs)
@@ -77,4 +81,8 @@ func ∪ (lhs: ConstraintSet, rhs: Equation) -> ConstraintSet {
 
 func ∪ (lhs: Equation, rhs: ConstraintSet) -> ConstraintSet {
     return ConstraintSet(equation: lhs).union(rhs)
+}
+
+func ∪ (lhs: Equation, rhs: Equation) -> ConstraintSet {
+    return ConstraintSet(equation: lhs).union(ConstraintSet(equation: rhs))
 }
