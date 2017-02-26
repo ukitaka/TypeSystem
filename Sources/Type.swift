@@ -14,18 +14,6 @@ indirect enum Type {
     case type(String)
 }
 
-// MARK: - Concrete types
-
-extension Type {
-    static var bool: ConcreteType {
-        return .type("Bool")
-    }
-
-    static var nat: ConcreteType {
-        return .type("Nat")
-    }
-}
-
 // MARK: - workaround
 
 typealias TypeVar = Type
