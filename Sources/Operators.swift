@@ -62,3 +62,11 @@ infix operator ====
 func ==== (lhs: Type, rhs: Type) -> Equation {
     return Equation(left: lhs, right: rhs)
 }
+
+// MARK: -
+
+infix operator ∪
+
+func ∪ (lhs: ConstraintSet, rhs: ConstraintSet) -> ConstraintSet {
+    return lhs.union(rhs)
+}

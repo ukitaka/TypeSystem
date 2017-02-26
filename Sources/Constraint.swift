@@ -20,6 +20,17 @@ struct ConstraintSet {
     init(equations: [Equation]) {
         self.equations = equations
     }
+
+    func union(_ constraintSet: ConstraintSet) -> ConstraintSet {
+        var equations = self.equations
+        for eq in constraintSet.equations {
+            guard equations.contains(eq) == false else {
+                continue
+            }
+            equations.append(eq)
+        }
+        return ConstraintSet(equations: equations)
+    }
 }
 
 // MARK: - Substitutable
