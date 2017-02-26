@@ -84,7 +84,7 @@ extension Substitution {
     }
 
     func apply(constraintSet: ConstraintSet) -> ConstraintSet {
-        return ConstraintSet(equations: constraintSet.map(apply))
+        return constraintSet.substitute(self)
     }
 }
 

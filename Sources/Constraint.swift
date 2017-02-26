@@ -22,6 +22,14 @@ struct ConstraintSet {
     }
 }
 
+// MARK: - Substitutable
+
+extension ConstraintSet: Substitutable {
+    func substitute(_ s: Substitution) -> ConstraintSet {
+        return ConstraintSet(equations: self.map(s.apply))
+    }
+}
+
 // MARK: - CustomStringConvertible
 
 extension ConstraintSet: CustomStringConvertible {
