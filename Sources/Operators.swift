@@ -70,3 +70,11 @@ infix operator ∪
 func ∪ (lhs: ConstraintSet, rhs: ConstraintSet) -> ConstraintSet {
     return lhs.union(rhs)
 }
+
+func ∪ (lhs: ConstraintSet, rhs: Equation) -> ConstraintSet {
+    return lhs.union(ConstraintSet(equation: rhs))
+}
+
+func ∪ (lhs: Equation, rhs: ConstraintSet) -> ConstraintSet {
+    return ConstraintSet(equation: lhs).union(rhs)
+}
