@@ -9,6 +9,7 @@
 import Foundation
 
 indirect enum 𝔹ℕ: Term {
+    case `var`(Type)
     case zero
     case succ(𝔹ℕ)
     case pred(𝔹ℕ)
@@ -23,6 +24,8 @@ indirect enum 𝔹ℕ: Term {
 extension 𝔹ℕ: Equatable {
     static func ==(lhs: 𝔹ℕ, rhs: 𝔹ℕ) -> Bool {
         switch (lhs, rhs) {
+        case (.var(let t1), .var(let t2)):
+            return t1 == t2
         case (.succ(let n1), .succ(let n2)):
             return n1 == n2
         case (.pred(let n1), .pred(let n2)):
@@ -46,6 +49,8 @@ extension 𝔹ℕ: Equatable {
 extension 𝔹ℕ: CustomStringConvertible {
     var description: String {
         switch self {
+        case .var(let type):
+            return type.description
         case .zero:
             return "0"
         case .succ(let n):
