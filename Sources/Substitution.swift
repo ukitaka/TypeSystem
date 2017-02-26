@@ -68,21 +68,7 @@ extension Substitution {
     }
 
     func apply(type: Type) -> Type {
-        switch type {
-        case .typeVar:
-            let lookedupType = lookup(typeVar: type)
-            if (type == lookedupType) {
-                return type
-            } else {
-                return apply(type: lookedupType)
-            }
-
-        case .arrow(let from, let to):
-            return .arrow(apply(type: from), apply(type: to))
-
-        case .type(let name):
-            return .type(name)
-        }
+        return type.substitute(self)
     }
 
     func apply(typingContext: TypingContext) -> TypingContext {
