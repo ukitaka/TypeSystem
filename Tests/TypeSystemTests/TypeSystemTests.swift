@@ -124,8 +124,9 @@ class TypeSystemTests: XCTestCase {
     // MARK : - Constraint generatoin
 
     func testGenerateConstraintSet() {
+        let Γ = TypingContext<𝔹ℕ>()
         let term: 𝔹ℕ = .ifThen(.isZero(.var("x", X)), .var("z", Z), .var("y", Y))
-        let C = generateConstraint(term: term)
+        let C = generateConstraint(term: term, in: Γ)
 
         let σ = unify(C)
 
