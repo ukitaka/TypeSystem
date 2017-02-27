@@ -34,6 +34,12 @@ extension 𝔹ℕ {
             return then.type
         }
     }
+
+    static var typingContext: TypingContext<𝔹ℕ> {
+        return TypingContext { term in
+            return term.type
+        }
+    }
 }
 
 // MARK: - Generate constraint
@@ -45,15 +51,15 @@ func generateConstraint(term: 𝔹ℕ, in Γ: TypingContext<𝔹ℕ>) -> Constra
     case .zero:
         return ConstraintSet()
     case .succ(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
+        return ((Γ ⊢ t) ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
     case .pred(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
+        return ((Γ ⊢ t) ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
     case .false, .true:
         return ConstraintSet()
     case .isZero(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
+        return ((Γ ⊢ t) ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
     case .ifThen(let cond, let then, let els):
-        return (then.type ==== els.type)
+        return ((Γ ⊢ then) ==== (Γ ⊢ els))
             ∪ (cond.type ==== 𝔹ℕ.Bool)
             ∪ generateConstraint(term: cond, in: Γ)
             ∪ generateConstraint(term: then, in: Γ)

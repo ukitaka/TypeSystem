@@ -120,7 +120,7 @@ class TypeSystemTests: XCTestCase {
     // MARK : - Constraint generatoin
 
     func testGenerateConstraintSet() {
-        let Γ = TypingContext<𝔹ℕ>()
+        let Γ = 𝔹ℕ.typingContext
         let term: 𝔹ℕ = .ifThen(.isZero(.var("x", X)), .var("z", Z), .var("y", Y))
         let C = generateConstraint(term: term, in: Γ)
 

@@ -63,6 +63,10 @@ func ==== (lhs: Type, rhs: Type) -> Equation {
     return Equation(left: lhs, right: rhs)
 }
 
+func ==== (lhs: Type!, rhs: Type!) -> Equation {
+    return Equation(left: lhs, right: rhs)
+}
+
 // MARK: -
 
 precedencegroup UnionPrecedenceRight {
