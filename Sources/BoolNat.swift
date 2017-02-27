@@ -38,26 +38,26 @@ extension 𝔹ℕ {
 
 // MARK: - Generate constraint
 
-func generateConstraint(term: 𝔹ℕ, in typingContext: TypingContext<𝔹ℕ>) -> ConstraintSet {
+func generateConstraint(term: 𝔹ℕ, in Γ: TypingContext<𝔹ℕ>) -> ConstraintSet {
     switch term {
     case .var:
         return ConstraintSet()
     case .zero:
         return ConstraintSet()
     case .succ(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: typingContext)
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
     case .pred(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: typingContext)
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
     case .false, .true:
         return ConstraintSet()
     case .isZero(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: typingContext)
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
     case .ifThen(let cond, let then, let els):
         return (then.type ==== els.type)
             ∪ (cond.type ==== 𝔹ℕ.Bool)
-            ∪ generateConstraint(term: cond, in: typingContext)
-            ∪ generateConstraint(term: then, in: typingContext)
-            ∪ generateConstraint(term: els, in: typingContext)
+            ∪ generateConstraint(term: cond, in: Γ)
+            ∪ generateConstraint(term: then, in: Γ)
+            ∪ generateConstraint(term: els, in: Γ)
     }
 }
 
