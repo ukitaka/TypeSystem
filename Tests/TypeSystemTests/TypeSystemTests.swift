@@ -64,9 +64,13 @@ class TypeSystemTests: XCTestCase {
             z: Z
         ]
 
-        XCTAssertEqual(σ(Γ) ⊢ x, T)
-        XCTAssertEqual(σ(Γ) ⊢ y, S)
-        XCTAssertEqual(σ(Γ) ⊢ z, Z)
+        let expectedΓ: TypingContext = [
+            x: T,
+            y: S,
+            z: Z
+        ]
+
+        XCTAssertEqual(σ(Γ), expectedΓ)
     }
 
     func testComposeSubstitution() {

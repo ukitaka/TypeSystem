@@ -9,24 +9,18 @@
 import Foundation
 
 struct TypingContext<T: Term> {
-    fileprivate let _types: (T) -> Type?
+    let assumptions: [T: Type]
 
     init() {
-        self._types = { _ in return nil }
+        self.assumptions = [:]
     }
 
     init(assumptions: [T: Type]) {
-        self._types = { term in
-            return assumptions[term]
-        }
-    }
-
-    init(types: @escaping (T) -> Type?) {
-        self._types = types
+        self.assumptions = assumptions
     }
 
     func types(term: T) -> Type? {
-        return _types(term)
+        return assumptions[term]
     }
 }
 
@@ -34,7 +28,11 @@ struct TypingContext<T: Term> {
 
 extension TypingContext: Substitutable {
     func substitute(_ s: Substitution) -> TypingContext {
-        return TypingContext { term in self._types(term).map(s.apply) }
+        var assumptions: [T: Type] = [:]
+        for (term, type) in self.assumptions {
+            assumptions[term] = s.apply(type: type)
+        }
+        return TypingContext(assumptions: assumptions)
     }
 }
 
@@ -49,9 +47,7 @@ extension TypingContext: ExpressibleByDictionaryLiteral {
         for (key, value) in elements {
             assumptions[key] = value
         }
-        self._types = { term in
-            return assumptions[term]
-        }
+        self.assumptions = assumptions
     }
 
     init(dictionaryLiteral elements: (Key, Value)...) {
@@ -59,8 +55,14 @@ extension TypingContext: ExpressibleByDictionaryLiteral {
         for (key, value) in elements {
             assumptions[key] = value
         }
-        self._types = { term in
-            return assumptions[term]
-        }
+        self.assumptions = assumptions
+    }
+}
+
+// MARK: - Equatable
+
+extension TypingContext: Equatable {
+    static func == (lhs: TypingContext, rhs: TypingContext) -> Bool {
+        return lhs.assumptions == rhs.assumptions
     }
 }
