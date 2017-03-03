@@ -29,14 +29,14 @@ XCTAssertEqual(Γ ⊢ t, T)
 ## Grammar
 
 ```
-t := x (変数)
-     false
-     true
-     0
-     succ t
-     pred t
-     isZero t
-     if t1 then t2 else t3
+t ::= x (変数)
+      false
+      true
+      0
+      succ t
+      pred t
+      isZero t
+      if t1 then t2 else t3
 ```
 
 Hindley-Milner型推論を実装していて、
