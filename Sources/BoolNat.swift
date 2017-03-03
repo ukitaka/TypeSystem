@@ -38,7 +38,7 @@ extension 𝔹ℕ {
 
 // MARK: - Generate constraint
 
-func generateConstraint(term: 𝔹ℕ, in Γ: TypingContext<𝔹ℕ>) -> ConstraintSet {
+func generateConstraintSet(term: 𝔹ℕ, in Γ: TypingContext<𝔹ℕ>) -> ConstraintSet {
     switch term {
     case .var(_, let type):
         if let t = (Γ ⊢ term) {
@@ -48,19 +48,19 @@ func generateConstraint(term: 𝔹ℕ, in Γ: TypingContext<𝔹ℕ>) -> Constra
     case .zero:
         return ConstraintSet()
     case .succ(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraintSet(term: t, in: Γ)
     case .pred(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraintSet(term: t, in: Γ)
     case .false, .true:
         return ConstraintSet()
     case .isZero(let t):
-        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraint(term: t, in: Γ)
+        return (t.type ==== 𝔹ℕ.Nat) ∪ generateConstraintSet(term: t, in: Γ)
     case .ifThen(let cond, let then, let els):
         return (then.type ==== els.type)
             ∪ (cond.type ==== 𝔹ℕ.Bool)
-            ∪ generateConstraint(term: cond, in: Γ)
-            ∪ generateConstraint(term: then, in: Γ)
-            ∪ generateConstraint(term: els, in: Γ)
+            ∪ generateConstraintSet(term: cond, in: Γ)
+            ∪ generateConstraintSet(term: then, in: Γ)
+            ∪ generateConstraintSet(term: els, in: Γ)
     }
 }
 
